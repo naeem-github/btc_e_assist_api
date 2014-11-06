@@ -3,9 +3,9 @@ Assist TradeApi for BTC-E. Version 1.2
 
 ###Java library for  simple and comfortable use of BTC-e API.
 
-Private BTC-E API documentation https://btc-e.com/api/documentation
+Private BTC-E API documentation https://btc-e.com/tapi/docs
 
-Public BTC-E API documentation https://btc-e.com/api/3/documentation
+Public BTC-E API documentation https://btc-e.com/api/3/docs
 
 
 If you want to build the library yourself, you will need:
@@ -17,7 +17,7 @@ Common algorithm:
 
 - set parametres for BTC-E API method
 - run method
-- if server responce consist of few parts (few pairs, few trades, etc.), then swith to next or specific
+- if server responce consist of few parts (few pairs, few trades, etc.) swith to next or specific
 - get current item value (current last price, current last fee, etc.)
 - switch to next element
 - ???
@@ -39,11 +39,11 @@ ta.ticker.addPair("ltc_usd");
 ta.ticker.runMethod();// run ticker API method with added parametres
 while(ta.ticker.hasNextPair()){
 	ta.ticker.switchNextPair();// in this case, switch to first pairs, i.e. btc_usd, for the next iteration it will be ltc_usd
-	System.out.println(ta.ticker.getCurrentLast()); // print last pair for current pair
+	System.out.println(ta.ticker.getCurrentLast()); // print last price for current pair
 }
 ```
 
-2) Get active orders for BTC_USD (depth API method)
+2) Get active orders for BTC-USD (depth API method)
 
 ```java
 
