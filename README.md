@@ -7,6 +7,17 @@ Private BTC-E API documentation https://btc-e.com/tapi/docs
 
 Public BTC-E API documentation https://btc-e.com/api/3/docs
 
+NOTE: if you use Oracle JDK 7, you may face the problem of certificates. Read more here http://stackoverflow.com/questions/18746565/godaddy-ssl-cert-not-working-with-java
+
+To fix it, you can download **gdroot-g2.crt** and **gdig2.crt** from here https://certs.godaddy.com/repository
+and then run in the terminal:
+```bash
+sudo $JAVA_HOME/bin/keytool -import -file gdroot-g2.crt -alias gdrootg2 -storepass changeit -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts
+```
+
+```bash
+sudo $JAVA_HOME/bin/keytool -import -file gdig2.crt -alias gdig2 -storepass changeit -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts
+```
 
 If you want to build the library yourself, you will need:
 ####Jackson library http://wiki.fasterxml.com/Home
