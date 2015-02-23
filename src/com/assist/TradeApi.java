@@ -511,12 +511,12 @@ final public class TradeApi {
             privateCancelOrder.setOrder_id(id);
             if (!privateCancelOrder.runMethod()) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1200);
                 } catch (InterruptedException e) {
                 }
                 if (!privateCancelOrder.runMethod()) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(1600);
                     } catch (InterruptedException e) {
                     }
                     if (!privateCancelOrder.runMethod()) {
