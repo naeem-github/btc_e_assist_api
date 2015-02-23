@@ -109,7 +109,7 @@ final public class PrivateNetwork {
     InputStream sendRequest(String name, String params, int connectMillis,
                             int readMillis) {
         try {
-            nonce = System.currentTimeMillis() / 1000;
+            nonce = System.currentTimeMillis() / 100l - 14247195500l;
             String postData = "method=" + name + "&" + params + "nonce="
                     + nonce.toString();
             HttpURLConnection connection = (HttpURLConnection) new URL(
