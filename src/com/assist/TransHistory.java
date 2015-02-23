@@ -2,7 +2,6 @@ package com.assist;
 
 public class TransHistory extends PrivateMultipleResponse {
     public TransHistory(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

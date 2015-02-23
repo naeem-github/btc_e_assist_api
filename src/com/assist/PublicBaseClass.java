@@ -32,15 +32,15 @@ abstract class PublicBaseClass extends CommonClass {
      * @return TRUE if positive answer is received. FALSE if has ANY trouble. If
      * getErrorMessage().length()==0 it's network troubles.
      */
-    protected synchronized boolean runMethod() {
+    public synchronized boolean runMethod() {
         return false;
     }
 
-    public synchronized void addPair(String pair) throws NoSuchMethodException {
+    public synchronized void addPair(String pair) {
         paramsBuf.append(pair.replace('-', '_').toLowerCase() + "-");
     }
 
-    public synchronized void setLimit(int count) throws NoSuchMethodException {
+    public synchronized void setLimit(int count) {
         limitString.delete(0, limitString.length());
         limitString.append(limit);
         limitString.append(String.valueOf(count));
@@ -48,22 +48,17 @@ abstract class PublicBaseClass extends CommonClass {
     }
 
     /**
-     * This method reverse "ignore_invalid" parameter. Default state is
+     * This method set "ignore_invalid" parameter. Default state is
      * "ignore_invalid=1"
-     *
-     * @throws NoSuchMethodException
      */
-    public synchronized void setReverseIgnoreInvalid()
-            throws NoSuchMethodException {
-        isIgnoreInvalid = isIgnoreInvalid ? false : true;
+    public synchronized void setIgnoreInvalid(boolean isIgnoreInvalid) {
+        this.isIgnoreInvalid = isIgnoreInvalid;
     }
 
     /**
      * Reset all parameters (addPair, Limit, ignoreInvalid);
-     *
-     * @throws NoSuchMethodException
      */
-    public synchronized void resetParams() throws NoSuchMethodException {
+    public synchronized void resetParams() {
         paramsBuf.delete(0, paramsBuf.length());
         paramsBuf.append("/");
         isLimit = false;

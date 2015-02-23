@@ -7,7 +7,6 @@ abstract class PrivateSingleResponse extends PrivateBaseClass {
     private ArrayList<String> currencyNames;
 
     PrivateSingleResponse() {
-        super();
         currencyNames = new ArrayList<String>();
     }
 
@@ -19,7 +18,7 @@ abstract class PrivateSingleResponse extends PrivateBaseClass {
             localTimestamp = 0;
             success = false;
             rootNode = mapper.readTree(json);
-            if (rootNode.path("success").toString() == "1") {
+            if (rootNode.path("success").toString().equals("1")) {
                 it = rootNode.path("return").path("funds").fieldNames();
                 if (it != null) {
                     while (it.hasNext()) {

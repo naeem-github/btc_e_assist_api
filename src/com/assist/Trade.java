@@ -2,7 +2,6 @@ package com.assist;
 
 public class Trade extends PrivateSingleResponse {
     public Trade(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

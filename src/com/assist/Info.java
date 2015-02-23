@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Info extends PublicBaseClass {
-    public Info() {
-        super();
-    }
-
     public synchronized boolean runMethod() {
         sendRequest("info");
         try {
@@ -21,31 +17,25 @@ public class Info extends PublicBaseClass {
     /**
      * Method is not allowed for this class
      */
-    public synchronized void addPair(String pair) throws NoSuchMethodException {
-        throw new NoSuchMethodException("This method is not allowed");
+    public synchronized void addPair(String pair) {
     }
 
     /**
      * Method is not allowed for this class
      */
-    public synchronized void setLimit(String count)
-            throws NoSuchMethodException {
-        throw new NoSuchMethodException("This method is not allowed");
+    public synchronized void setLimit(int count) {
     }
 
     /**
      * Method is not allowed for this class
      */
-    public synchronized void setReverseIgnoreInvalid()
-            throws NoSuchMethodException {
-        throw new NoSuchMethodException("This method is not allowed");
+    public synchronized void setIgnoreInvalid(boolean isIgnoreInvalid) {
     }
 
     /**
      * Method is not allowed for this class
      */
-    public synchronized void resetParams() throws NoSuchMethodException {
-        throw new NoSuchMethodException("This method is not allowed");
+    public synchronized void resetParams() {
     }
 
     public synchronized void switchResetPair() {

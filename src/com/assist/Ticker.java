@@ -1,12 +1,10 @@
 package com.assist;
 
 public class Ticker extends PublicBaseClass {
-    public Ticker() {
-        super();
-    }
-
-    public synchronized void setLimit(int count) throws NoSuchMethodException {
-        throw new NoSuchMethodException("This method is not allowed");
+    /**
+     * Method is not allowed for this class
+     */
+    public synchronized void setLimit(int count) {
     }
 
     public synchronized boolean runMethod() {

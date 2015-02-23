@@ -2,7 +2,6 @@ package com.assist;
 
 public class CancelOrder extends PrivateSingleResponse {
     public CancelOrder(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

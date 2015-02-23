@@ -2,7 +2,6 @@ package com.assist;
 
 public class GetInfo extends PrivateSingleResponse {
     public GetInfo(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

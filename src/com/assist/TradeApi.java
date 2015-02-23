@@ -33,7 +33,7 @@ final public class TradeApi {
     public CancelOrder cancelOrder;
     private PrivateNetwork privateNetwork;
 
-    private String diffPrevPair = new String();
+    private String diffPrevPair = "";
     private Ticker privateTicker;
     private Depth privateDepth;
     private GetInfo privateGetInfo;
@@ -214,8 +214,8 @@ final public class TradeApi {
      *                   EXCEPTION_TOO_HIGH_RATE, EXCEPTION_TOO_LOW_RATE,
      *                   EXCEPTION_INVALID_AMOUNT, EXCEPTION_TOO_LOW_AMOUNT
      */
-    public Trade extendedTrade(String pairName, boolean type, String rate,
-                               String amount) throws Exception {
+    public synchronized Trade extendedTrade(String pairName, boolean type, String rate,
+                                            String amount) throws Exception {
         String mPairName = CommonClass.convertPairName(pairName);
         Double mRate;
         Double mAmount;
@@ -293,8 +293,8 @@ final public class TradeApi {
      * @param pauseMillis - pause in milliseconds, may be used "in loop"
      * @return Difference or Double.MIN_VALUE if has ANY trouble
      */
-    public double priceDifference(String pairName, Double targetPrice,
-                                  int pauseMillis) {
+    public synchronized double priceDifference(String pairName, Double targetPrice,
+                                               int pauseMillis) {
         synchronized (this) {
             double difference = Double.MIN_VALUE;
             try {
@@ -332,7 +332,7 @@ final public class TradeApi {
      *                   EXCEPTION_CANCEL_ORDER_NOT_SUCCESS and other from
      *                   extendedTrade.
      */
-    public double tryMaximumBuy(String pairName, long reuseAgeMillis)
+    public synchronized double tryMaximumBuy(String pairName, long reuseAgeMillis)
             throws Exception {
         long privateDepthAge, depthAge;
         double funds = 0, realFunds = Double.MIN_VALUE, initialFunds = 0;
@@ -440,7 +440,7 @@ final public class TradeApi {
      *                   EXCEPTION_CANCEL_ORDER_NOT_SUCCESS and other from
      *                   extendedTrade.
      */
-    public double tryMaximumSell(String pairName) throws Exception {
+    public synchronized double tryMaximumSell(String pairName) throws Exception {
         double resultRemains = Double.MIN_VALUE;
         String[] names = CommonClass.convertPairName(pairName).split("-");
         double ratio = 0;
@@ -494,8 +494,37 @@ final public class TradeApi {
             resultRemains = Double.parseDouble(privateTrade
                     .getBalance(names[0]));
         } catch (Exception e) {
-            throw e;
+            throw new Exception(EXCEPTION_TRADE_NOT_SUCCESS);
         }
         return resultRemains;
+    }
+
+    /**
+     * Cancel few orders, try 3 times per order
+     *
+     * @param array array with ID's
+     * @return the number of not cancelled orders
+     */
+    public synchronized int cancelFewOrders(Iterable<String> array) {
+        int notCancelled = 0;
+        for (String id : array) {
+            privateCancelOrder.setOrder_id(id);
+            if (!privateCancelOrder.runMethod()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                }
+                if (!privateCancelOrder.runMethod()) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                    }
+                    if (!privateCancelOrder.runMethod()) {
+                        notCancelled++;
+                    }
+                }
+            }
+        }
+        return notCancelled;
     }
 }

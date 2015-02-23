@@ -5,10 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Iterator;
 
 public class Trades extends PublicBaseClass {
-    public Trades() {
-        super();
-    }
-
     private Iterator<JsonNode> itTrades;
     private JsonNode current_trade;
 

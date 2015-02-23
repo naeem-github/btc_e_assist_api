@@ -2,7 +2,6 @@ package com.assist;
 
 public class TradeHistory extends PrivateMultipleResponse {
     public TradeHistory(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

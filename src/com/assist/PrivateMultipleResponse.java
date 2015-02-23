@@ -3,11 +3,6 @@ package com.assist;
 import java.io.InputStream;
 
 abstract class PrivateMultipleResponse extends PrivateBaseClass {
-
-    PrivateMultipleResponse() {
-        super();
-    }
-
     protected String current_position;
 
     protected synchronized void setData(InputStream json) {
@@ -17,7 +12,7 @@ abstract class PrivateMultipleResponse extends PrivateBaseClass {
             localTimestamp = 0;
             success = false;
             rootNode = mapper.readTree(json);
-            if (rootNode.path("success").toString() == "1") {
+            if (rootNode.path("success").toString().equals("1")) {
                 it = rootNode.path("return").fieldNames();
                 if (it != null) {
                     localTimestamp = System.currentTimeMillis();

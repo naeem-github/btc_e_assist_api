@@ -2,7 +2,6 @@ package com.assist;
 
 public class ActiveOrders extends PrivateMultipleResponse {
     public ActiveOrders(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

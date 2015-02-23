@@ -2,7 +2,6 @@ package com.assist;
 
 public class OrderInfo extends PrivateMultipleResponse {
     public OrderInfo(PrivateNetwork nt) {
-        super();
         network = nt;
     }
 

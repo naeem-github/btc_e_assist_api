@@ -5,10 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.Iterator;
 
 public class Depth extends PublicBaseClass {
-    public Depth() {
-        super();
-    }
-
     private Iterator<JsonNode> itAsks;
     private Iterator<JsonNode> itBids;
     private JsonNode current_array_asks;
