@@ -1,5 +1,6 @@
 package com.assist;
 
+import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
@@ -117,7 +118,11 @@ abstract class PublicBaseClass extends CommonClass {
             it = null;
             localTimestamp = 0;
             success = false;
-            rootNode = mapper.readTree(connection.getInputStream());
+            try {
+                rootNode = mapper.readTree(connection.getInputStream());
+            } catch (IOException e) {
+                rootNode = mapper.readTree(Proxy.loadingWithProxy(address.toString()));
+            }
             if (!rootNode.path("success").toString().equals("0")) {
                 it = rootNode.fieldNames();
                 if (it != null) {
