@@ -14,9 +14,9 @@ abstract class PublicBaseClass extends CommonClass {
     private boolean isIgnoreInvalid;
     private StringBuilder limitString;
 
-    final private String limit = "limit=";
-    final private String ignoreInvalid = "ignore_invalid=1";
-    final private String TARGET_URL = "https://btc-e.com/api/3/";
+    private static final String limit = "limit=";
+    private static final String ignoreInvalid = "ignore_invalid=1";
+    private static final String TARGET_URL = "https://btc-e.com/api/3/";
 
     PublicBaseClass() {
         paramsBuf = new StringBuilder("/");

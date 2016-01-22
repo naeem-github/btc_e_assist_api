@@ -33,8 +33,8 @@ abstract class PrivateBaseClass extends CommonClass {
         paramsBuf.delete(0, paramsBuf.length());
         Set<Map.Entry<String, String>> set = paramsMap.entrySet();
         for (Map.Entry<String, String> me : set) {
-            paramsBuf.append(me.getKey() + "=");
-            paramsBuf.append(me.getValue() + "&");
+            paramsBuf.append(me.getKey()).append("=");
+            paramsBuf.append(me.getValue()).append("&");
         }
         return paramsBuf.toString();
     }

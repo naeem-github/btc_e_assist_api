@@ -16,9 +16,9 @@ final public class TradeApi {
     public final String EXCEPTION_CANCEL_ORDER_NOT_SUCCESS = "CancelOrder is not success";
     public final String EXCEPTION_MULTIPLE_FAILURE = "Multiple failure";
 
-    private double TRYMAXBUY_STOCK_RATIO = 0.97;
-    private double TRYMAXSELL_RATE_RATIO = 0.8;
-    private long INFO_REUSE_AGE_MILLIS = 3600000;
+    private static final double TRYMAXBUY_STOCK_RATIO = 0.97;
+    private static final double TRYMAXSELL_RATE_RATIO = 0.8;
+    private static final long INFO_REUSE_AGE_MILLIS = 3600000;
 
     public Info info;
     public Ticker ticker;

@@ -4,6 +4,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -16,9 +17,8 @@ final public class PrivateNetwork {
     private String apiKey = "";
     private Mac mac;
     private MessageDigest md;
-    private Long nonce;
 
-    final private String TARGET_URL = "https://btc-e.com/tapi";
+    private static final String TARGET_URL = "https://btc-e.com/tapi";
     private String clientName = "Assist TradeApi";
 
     public PrivateNetwork() {
@@ -26,7 +26,7 @@ final public class PrivateNetwork {
             mac = Mac.getInstance("HMACSHA512");
             userEncryptorKeys = new StringCrypter();
             md = MessageDigest.getInstance("SHA-1");
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException ignored) {
         }
 
     }
@@ -81,14 +81,14 @@ final public class PrivateNetwork {
     }
 
     public synchronized boolean isKeysInstalled() {
-        return (apiKey.length() > 0 && mac.getMacLength() > 0) ? true : false;
+        return (apiKey.length() > 0 && mac.getMacLength() > 0);
     }
 
     public synchronized void resetInstalledKeys() {
         apiKey = "";
         try {
             mac = Mac.getInstance("HMACSHA512");
-        } catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException ignored) {
         }
     }
 
@@ -99,17 +99,16 @@ final public class PrivateNetwork {
     private String hashStr(String str) throws Exception {
         StringBuilder hashCode = new StringBuilder();
         byte[] digest = md.digest(str.getBytes());
-        for (int i = 0; i < digest.length; i++) {
-            hashCode.append(Integer.toHexString(0x0100 + (digest[i] & 0x00FF))
+        for (byte aDigest : digest) {
+            hashCode.append(Integer.toHexString(0x0100 + (aDigest & 0x00FF))
                     .substring(1));
         }
         return hashCode.toString();
     }
 
-    InputStream sendRequest(String name, String params, int connectMillis,
-                            int readMillis) {
+    InputStream sendRequest(String name, String params, int connectMillis, int readMillis) {
         try {
-            nonce = System.currentTimeMillis() / 100l - 14247195500l;
+            Long nonce = System.currentTimeMillis() / 100L - 14247195500L;
             String postData = "method=" + name + "&" + params + "nonce="
                     + nonce.toString();
             HttpURLConnection connection = (HttpURLConnection) new URL(
@@ -119,10 +118,7 @@ final public class PrivateNetwork {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("User-Agent", clientName);
             connection.setRequestProperty("Key", apiKey);
-            connection.setRequestProperty(
-                    "Sign",
-                    new String(Hex.encodeHex(mac.doFinal(postData
-                            .getBytes("UTF-8")))));
+            connection.setRequestProperty("Sign", new String(Hex.encodeHex(mac.doFinal(postData.getBytes("UTF-8")))));
             connection.setDoOutput(true);
             connection.setDoInput(true);
             OutputStream os = connection.getOutputStream();
