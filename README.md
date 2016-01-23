@@ -1,4 +1,4 @@
-Assist TradeApi for BTC-E. Version 1.3
+Assist TradeApi for BTC-E. Version 1.4
 ====================================
 
 ###Java library for  simple and comfortable use of BTC-e API.
@@ -8,6 +8,8 @@ Private BTC-E API documentation https://btc-e.com/tapi/docs
 Public BTC-E API documentation https://btc-e.com/api/3/docs
 
 NOTE: after version 1.3 previous API-key and Secret not working (new method of generating nonce parameter)
+
+NOTE: added proxy for blocked countries. Thx to http://noblockme.ru
 
 NOTE: if you use Oracle JDK 7, you may face the problem of certificates. Read more here http://stackoverflow.com/questions/18746565/godaddy-ssl-cert-not-working-with-java
 
