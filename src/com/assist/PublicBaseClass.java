@@ -38,7 +38,7 @@ abstract class PublicBaseClass extends CommonClass {
     }
 
     public synchronized void addPair(String pair) {
-        paramsBuf.append(pair.replace('-', '_').toLowerCase() + "-");
+        paramsBuf.append(pair.replace('-', '_').toLowerCase()).append("-");
     }
 
     public synchronized void setLimit(int count) {
@@ -121,7 +121,8 @@ abstract class PublicBaseClass extends CommonClass {
             try {
                 rootNode = mapper.readTree(connection.getInputStream());
             } catch (IOException e) {
-                rootNode = mapper.readTree(Proxy.loadingWithProxy(address.toString()));
+                String proxyUrl = ProxyHook.getProxyUrl(address.toString());
+                rootNode = mapper.readTree(ProxyHook.loadContent(proxyUrl));
             }
             if (!rootNode.path("success").toString().equals("0")) {
                 it = rootNode.fieldNames();

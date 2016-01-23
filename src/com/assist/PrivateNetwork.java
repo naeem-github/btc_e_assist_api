@@ -5,7 +5,9 @@ import org.apache.commons.codec.binary.Hex;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,8 +15,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 final public class PrivateNetwork {
-    private StringCrypter userEncryptorKeys;
+    private StringCrypter userEncryptKeys;
     private String apiKey = "";
+    private boolean flagTryProxyHook = false;
     private Mac mac;
     private MessageDigest md;
 
@@ -24,7 +27,7 @@ final public class PrivateNetwork {
     public PrivateNetwork() {
         try {
             mac = Mac.getInstance("HMACSHA512");
-            userEncryptorKeys = new StringCrypter();
+            userEncryptKeys = new StringCrypter();
             md = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException ignored) {
         }
@@ -41,8 +44,8 @@ final public class PrivateNetwork {
      */
     public synchronized String encodeStr(String sourceStr, String userKey)
             throws Exception {
-        userEncryptorKeys.setKey(hashStr(userKey));
-        return userEncryptorKeys.encrypt(sourceStr);
+        userEncryptKeys.setKey(hashStr(userKey));
+        return userEncryptKeys.encrypt(sourceStr);
     }
 
     /**
@@ -55,8 +58,8 @@ final public class PrivateNetwork {
      */
     public synchronized String decodeStr(String encodeStr, String userKey)
             throws Exception {
-        userEncryptorKeys.setKey(hashStr(userKey));
-        return userEncryptorKeys.decrypt(encodeStr);
+        userEncryptKeys.setKey(hashStr(userKey));
+        return userEncryptKeys.decrypt(encodeStr);
     }
 
     public synchronized void setKeys(String aKey, String aSecret)
@@ -73,9 +76,9 @@ final public class PrivateNetwork {
 
     public synchronized void setKeys(String encodedKey, String encodedSecret,
                                      String decodeKey) throws Exception {
-        userEncryptorKeys.setKey(hashStr(decodeKey));
-        apiKey = userEncryptorKeys.decrypt(encodedKey);
-        SecretKeySpec key = new SecretKeySpec(userEncryptorKeys.decrypt(
+        userEncryptKeys.setKey(hashStr(decodeKey));
+        apiKey = userEncryptKeys.decrypt(encodedKey);
+        SecretKeySpec key = new SecretKeySpec(userEncryptKeys.decrypt(
                 encodedSecret).getBytes("UTF-8"), "HmacSHA512");
         mac.init(key);
     }
@@ -111,8 +114,13 @@ final public class PrivateNetwork {
             Long nonce = System.currentTimeMillis() / 100L - 14247195500L;
             String postData = "method=" + name + "&" + params + "nonce="
                     + nonce.toString();
-            HttpURLConnection connection = (HttpURLConnection) new URL(
-                    TARGET_URL).openConnection();
+            HttpURLConnection connection;
+            if (flagTryProxyHook) {
+                String proxyUrl = ProxyHook.getProxyUrl(TARGET_URL);
+                connection = (HttpURLConnection) new URL(proxyUrl).openConnection();
+            } else {
+                connection = (HttpURLConnection) new URL(TARGET_URL).openConnection();
+            }
             connection.setConnectTimeout(connectMillis);
             connection.setReadTimeout(readMillis);
             connection.setRequestMethod("POST");
@@ -127,8 +135,13 @@ final public class PrivateNetwork {
             os.close();
             return connection.getInputStream();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            flagTryProxyHook = !flagTryProxyHook;
+            if (flagTryProxyHook) {
+                return sendRequest(name, params, connectMillis, readMillis);
+            } else {
+                e.printStackTrace();
+                return null;
+            }
         }
     }
 }
