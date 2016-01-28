@@ -14,10 +14,11 @@ abstract class PublicBaseClass extends CommonClass {
     private boolean isLimit;
     private boolean isIgnoreInvalid;
     private StringBuilder limitString;
+    private String clientName = "Assist TradeApi";
 
     private static final String limit = "limit=";
     private static final String ignoreInvalid = "ignore_invalid=1";
-    private static final String TARGET_URL = "https://btc-e.com/api/3/";
+    private static final String API_URL = "/api/3/";
 
     PublicBaseClass() {
         paramsBuf = new StringBuilder("/");
@@ -95,7 +96,8 @@ abstract class PublicBaseClass extends CommonClass {
     protected boolean sendRequest(String name) {
         try {
             address.delete(0, address.length());
-            address.append(TARGET_URL);
+            address.append(Mirrors.getMirror());
+            address.append(API_URL);
             address.append(name);
             address.append(paramsBuf);
             if (isLimit && isIgnoreInvalid) {
@@ -112,6 +114,7 @@ abstract class PublicBaseClass extends CommonClass {
             }
             URL url = new URL(address.toString());
             URLConnection connection = url.openConnection();
+            connection.setRequestProperty("User-Agent", clientName);
             connection.setConnectTimeout(connectTimeoutMillis);
             connection.setReadTimeout(readTimeoutMillis);
             rootNode = null;
@@ -177,5 +180,9 @@ abstract class PublicBaseClass extends CommonClass {
 
     public synchronized String getCurrentPairName() {
         return convertPairName(current_position);
+    }
+
+    public synchronized void setClientName(String name) {
+        clientName = name;
     }
 }

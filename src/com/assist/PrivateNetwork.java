@@ -21,6 +21,7 @@ final public class PrivateNetwork {
     private Mac mac;
     private MessageDigest md;
 
+    private static final String API_URL = "/tapi";
     private static final String TARGET_URL = "https://btc-e.com/tapi";
     private String clientName = "Assist TradeApi";
 
@@ -119,7 +120,7 @@ final public class PrivateNetwork {
                 String proxyUrl = ProxyHook.getProxyUrl(TARGET_URL);
                 connection = (HttpURLConnection) new URL(proxyUrl).openConnection();
             } else {
-                connection = (HttpURLConnection) new URL(TARGET_URL).openConnection();
+                connection = (HttpURLConnection) new URL(Mirrors.getMirror() + API_URL).openConnection();
             }
             connection.setConnectTimeout(connectMillis);
             connection.setReadTimeout(readMillis);

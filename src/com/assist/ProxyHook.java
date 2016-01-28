@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ProxyHook {
+    private static final String userAgent = "Assist TradeApi";
+
 
     public static String getProxyUrl(String originalUrl) {
         String zeroUrl = getZeroUrl(originalUrl);
@@ -36,6 +38,7 @@ public class ProxyHook {
         try {
             URL url = new URL(link);
             URLConnection connection = url.openConnection();
+            connection.setRequestProperty("User-Agent", userAgent);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder stringBuilder = new StringBuilder();
             String line;

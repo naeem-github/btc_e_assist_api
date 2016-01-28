@@ -167,12 +167,16 @@ final public class TradeApi {
     }
 
     /**
-     * Set name for private requests, default name is "Assist TradeApi"
+     * Set name for private and public requests, default name is "Assist TradeApi"
      *
      * @param name
      */
     public void setClientName(String name) {
         privateNetwork.setClientName(name);
+        info.setClientName(name);
+        ticker.setClientName(name);
+        depth.setClientName(name);
+        trades.setClientName(name);
     }
 
     /**
