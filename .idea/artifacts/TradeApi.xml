@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TradeApi">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="TradeApi.jar">
+      <element id="module-output" name="assist" />
+      <element id="extracted-dir" path="$USER_HOME$/mylibs/commons-codec-1.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/mylibs/jackson-annotations-2.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/mylibs/jackson-core-2.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/mylibs/jackson-databind-2.8.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
