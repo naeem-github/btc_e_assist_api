@@ -1,6 +1,5 @@
 package com.assist;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
@@ -121,12 +120,7 @@ abstract class PublicBaseClass extends CommonClass {
             it = null;
             localTimestamp = 0;
             success = false;
-            try {
-                rootNode = mapper.readTree(connection.getInputStream());
-            } catch (IOException e) {
-                String proxyUrl = ProxyHook.getProxyUrl(address.toString());
-                rootNode = mapper.readTree(ProxyHook.loadContent(proxyUrl));
-            }
+            rootNode = mapper.readTree(connection.getInputStream());
             if (!rootNode.path("success").toString().equals("0")) {
                 it = rootNode.fieldNames();
                 if (it != null) {

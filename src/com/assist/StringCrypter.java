@@ -2,11 +2,12 @@ package com.assist;
 
 import org.apache.commons.codec.binary.Base64;
 
+import java.security.spec.KeySpec;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
-import java.security.spec.KeySpec;
 
 final class StringCrypter {
     private static final String UNICODE_FORMAT = "UTF8";

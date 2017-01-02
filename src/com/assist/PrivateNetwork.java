@@ -2,17 +2,15 @@ package com.assist;
 
 import org.apache.commons.codec.binary.Hex;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 final public class PrivateNetwork {
     private StringCrypter userEncryptKeys;
@@ -115,13 +113,7 @@ final public class PrivateNetwork {
             Long nonce = System.currentTimeMillis() / 100L - 14247195500L;
             String postData = "method=" + name + "&" + params + "nonce="
                     + nonce.toString();
-            HttpURLConnection connection;
-            if (flagTryProxyHook) {
-                String proxyUrl = ProxyHook.getProxyUrl(TARGET_URL);
-                connection = (HttpURLConnection) new URL(proxyUrl).openConnection();
-            } else {
-                connection = (HttpURLConnection) new URL(Mirrors.getMirror() + API_URL).openConnection();
-            }
+            HttpURLConnection connection = (HttpURLConnection) new URL(Mirrors.getMirror() + API_URL).openConnection();
             connection.setConnectTimeout(connectMillis);
             connection.setReadTimeout(readMillis);
             connection.setRequestMethod("POST");
@@ -136,13 +128,7 @@ final public class PrivateNetwork {
             os.close();
             return connection.getInputStream();
         } catch (Exception e) {
-            flagTryProxyHook = !flagTryProxyHook;
-            if (flagTryProxyHook) {
-                return sendRequest(name, params, connectMillis, readMillis);
-            } else {
-                e.printStackTrace();
-                return null;
-            }
+            return null;
         }
     }
 }
