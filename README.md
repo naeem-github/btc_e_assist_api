@@ -1,7 +1,7 @@
 Assist TradeApi for BTC-E. Version 1.4
 ====================================
 
-###Java library for  simple and comfortable use of BTC-e API.
+### Java library for  simple and comfortable use of BTC-e API.
 
 Private BTC-E API documentation https://btc-e.com/tapi/docs
 
@@ -24,8 +24,8 @@ sudo $JAVA_HOME/bin/keytool -import -file gdig2.crt -alias gdig2 -storepass chan
 ```
 
 If you want to build the library yourself, you will need:
-####Jackson library http://wiki.fasterxml.com/Home
-####Apache Commons Codec (TM) http://commons.apache.org/proper/commons-codec/
+#### Jackson library http://wiki.fasterxml.com/Home
+#### Apache Commons Codec (TM) http://commons.apache.org/proper/commons-codec/
 
 
 Common algorithm:
@@ -42,7 +42,7 @@ If you use it in loop, do not forget to call resetParams, otherwise parametres s
 
 Note: by default, if you add nonexistent pair (but not duplicate), library set "ignore invalid" to "true" and you can get valid answer, but without nonexistent pair. You can change this behavior, if call method setReverseIgnoreInvalid(), it reverse API method state, or you can get valid pairs list from Info API method.
 
-###Examples:
+### Examples:
 
 1) Get last price for BTC-USD and LTC-USD
 
@@ -88,7 +88,7 @@ TradeApi is the Main class, that contains other objects with public modifiers an
 
 Example of using this library you also can see in BTC-e Assist app, TradeControl class: https://github.com/alexandersjn/btc-e-assist/blob/master/src/com/btc_e_assist/TradeControl.java
 
-###Donation:
+### Donation:
 
 
 BTC 1GQJ5iH84EVcsr5qxLCgoopLb3ttDtrQVa
