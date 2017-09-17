@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class Mirrors {
     private static final String userAgent = "Assist TradeApi";
-    public static final String[] mirrors = {"https://btc-e.nz", "https://btc-e.com"};
+    public static final String[] mirrors = {"https://wex.nz"};
     private static int currentMirrorIndex = -1;
 
 
